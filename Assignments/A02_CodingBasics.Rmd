@@ -31,7 +31,7 @@ This exercise accompanies the lessons in Environmental Data Analytics on coding 
 4. Insert comments in your code to describe what you are doing.
 
 ```{r}
-#1. Creating a sequence of number, first number is "from", second number is "to", last number is "by". Assigned sequence the name "sequence"
+#1. Creating a sequence of numbers, first number is "from", second number is "to", last number is "by". Assigned sequence the name "sequence"
 sequence <- seq(1, 100, 4)
 
 #2. Calculated the mean and median for the above sequence and assigned names for each. 
