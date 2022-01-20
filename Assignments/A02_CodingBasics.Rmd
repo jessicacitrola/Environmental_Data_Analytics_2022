@@ -1,6 +1,6 @@
 ---
 title: "Assignment 2: Coding Basics"
-author: "Student Name"
+author: "Jessica Citrola"
 output: pdf_document
 geometry: margin=2.54cm
 editor_options: 
@@ -31,11 +31,17 @@ This exercise accompanies the lessons in Environmental Data Analytics on coding 
 4. Insert comments in your code to describe what you are doing.
 
 ```{r}
-#1. 
+#1. Creating a sequence of number, first number is "from", second number is "to", last number is "by". Assigned sequence the name "sequence"
+sequence <- seq(1, 100, 4)
 
-#2. 
+#2. Calculated the mean and median for the above sequence and assigned names for each. 
+m<- mean(sequence)
+m
+md <- median(sequence)
+md
 
-#3. 
+#3. Used the names designated in #2 to ask R if mean is greater than median.
+m > md
 
 ```
 
@@ -50,6 +56,14 @@ This exercise accompanies the lessons in Environmental Data Analytics on coding 
 8. Label the columns of your data frame with informative titles.
 
 ```{r}
+#5, #6
+Names <- c("Jessica", "Lucas", "Kristen", "Christina", "Emma", "Tyler", "Connor")
+Scores <- c(95, 90, 84, 49, 60, 78, 74)
+Pass <- c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE)
+
+#7, #8
+StudentGrades <- data.frame(Names, Scores, Pass)
+StudentGrades
 
 ```
 
@@ -57,14 +71,31 @@ This exercise accompanies the lessons in Environmental Data Analytics on coding 
 
 > Answer: 
 
+A data frame is used for storing data tables and can list a vector of equal length. The columns can have multiple data types, such as characters, numeric, and integers (like a table on an excel sheet). On the other hand, a matrix is a collection of data sets arranged in a two dimensional rectangular format. The data in the matrix has to be the same type of data and the matrix contains a fixed number of rows and columns.
+
+
 10. Create a function with an if/else statement. Your function should determine whether a test score is a passing grade of 50 or above (TRUE or FALSE). You will need to choose either the `if` and `else` statements or the `ifelse` statement. Hint: Use `print`, not `return`. The name of your function should be informative.
+
+```{r}
+
+PassingGrade <- function(x){
+  ifelse(x>50,"TRUE","FALSE")
+}
+
+```
+
+
 
 11. Apply your function to the vector with test scores that you created in number 5. 
 
 ```{r}
+
+PassingGrade(Scores)
 
 ```
 
 12. QUESTION: Which option of `if` and `else` vs. `ifelse` worked? Why?
 
 > Answer: 
+
+When using 'if' and 'else', I received an error message that the condition has length > 1 and only the first element will be used. The 'if' function works on things that are a length of 1. In this case, I have a vector with a length of 7 (7 scores). The function 'ifelse' works with vector lengths that are greater than 1. In this case, 'Ifelse' has three main arguments, the expression (Scores), what to do if true (write TRUE), what to do if false (write FALSE). 
