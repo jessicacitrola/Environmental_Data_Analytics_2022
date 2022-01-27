@@ -1,6 +1,6 @@
 ---
 title: "Assignment 1: Introduction"
-author: "Student Name"
+author: "Jessica Citrola"
 output: pdf_document
 geometry: margin=2.54cm
 ---
@@ -22,21 +22,21 @@ The completed exercise is due on <>.
 
 1. What are your previous experiences with data analytics, R, and Git? Include both formal and informal training.
 
-> Answer: 
+> Answer: I have taken Applied Data Analysis (ENV 710) where we used R studio.
 
 2. Are there any components of the course about which you feel confident?
 
-> Answer: 
+> Answer: I feel like I may have a head start on some tasks as I feel like ENV 710 gave me some experience on modeling, statistics, and general R use. 
 
 3. Are there any components of the course about which you feel apprehensive?
 
-> Answer: 
+> Answer: I am apprehensive overall about the course as I thought the R labs in my last course were a bit confusing and extremely time consuming. But I am hopeful that I will get a better understanding of R through this course. 
 
 
 ## 2) GitHub
 
 Provide a link below to your forked course repository in GitHub. Make sure you have pulled all recent changes from the course repository  and that you have updated your course README file. 
 
-> Answer: 
+> Answer: https://github.com/jessicacitrola/Environmental_Data_Analytics_2022
 
 
