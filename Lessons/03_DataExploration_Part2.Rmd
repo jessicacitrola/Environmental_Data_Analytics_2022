@@ -29,9 +29,10 @@ getwd()
 library(tidyverse)
 
 # 3. Import datasets
-USGS.flow.data <- read.csv("./Data/Processed/USGS_Site02085000_Flow_Processed.csv")
+USGS.flow.data <- read.csv("/Users/jessicacitrola/Documents/ENV872/Environmental_Data_Analytics_2022/Data/USGS_Site02085000_Flow_Processed.csv")
 
-#View(USGS.flow.data)
+
+View(USGS.flow.data)
 # Alternate option: click on data frame in Environment tab
 
 colnames(USGS.flow.data)

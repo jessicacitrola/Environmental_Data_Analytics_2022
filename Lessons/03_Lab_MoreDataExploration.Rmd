@@ -93,18 +93,29 @@ Question: In the R chunk below, write "dataframe1$". Press `tab` after you type 
 Find a ten-day forecast of temperatures (Fahrenheit) for Durham, North Carolina. Create two vectors, one representing the high temperature on each of the ten days and one representing the low.
 
 ```{r}
-
+highF <- c(50, 33, 43, 51, 54, 59, 66, 57, 42, 44)
+lowF <- c(27, 15, 25, 26, 35, 47, 53, 30, 22, 23)  
+  
 ```
 
 Now, create two additional vectors that include the ten-day forecast for the high and low temperatures in Celsius. Use a function to create the two new vectors from your existing ones in Fahrenheit.
 
 ```{r}
 
+f_to_c = function(f) {
+  c <- round((f-32)*5/9, 2)
+  return(c)
+}
+
+highC <- f_to_c(highF)
+highC
 ```
 
 Combine your four vectors into a data frame and add informative column names.
 
 ```{r}
+
+data.frame(highF, lowF, highC, lowC)
 
 ```
 
