@@ -1,6 +1,6 @@
 ---
 title: "Assignment 4: Data Wrangling"
-author: "Student Name"
+author: "Jessica Citrola"
 output: pdf_document
 geometry: margin=2.54cm
 ---
@@ -25,8 +25,39 @@ The completed exercise is due on Monday, Feb 7 @ 7:00pm.
 
 ```{r, message = FALSE}
 #1
+library(tidyverse)
+library(lubridate)
+
+EPA.O3.2018 <- read.csv("../Data/Raw/EPAair_O3_NC2018_raw.csv", stringsAsFactors = TRUE)
+
+EPA.O3.2019 <- read.csv("../Data/Raw/EPAair_O3_NC2019_raw.csv", stringsAsFactors = TRUE)
+
+EPA.PM.2018 <- read.csv("../Data/Raw/EPAair_PM25_NC2018_raw.csv", stringsAsFactors = TRUE)
+
+EPA.PM.2019 <- read.csv("../Data/Raw/EPAair_PM25_NC2019_raw.csv", stringsAsFactors = TRUE)
 
 #2
+
+dim(EPA.O3.2018)
+colnames(EPA.O3.2018)
+head(EPA.O3.2018)
+str(EPA.O3.2018)
+
+dim(EPA.O3.2019)
+colnames(EPA.O3.2019)
+head(EPA.O3.2019)
+str(EPA.O3.2019)
+
+dim(EPA.PM.2018)
+colnames(EPA.PM.2018)
+head(EPA.PM.2018)
+str(EPA.PM.2018)
+
+dim(EPA.PM.2019)
+colnames(EPA.PM.2019)
+head(EPA.PM.2019)
+str(EPA.PM.2019)
+
 ```
 
 ## Wrangle individual datasets to create processed files.
@@ -37,12 +68,53 @@ The completed exercise is due on Monday, Feb 7 @ 7:00pm.
 
 ```{r}
 #3
+class(EPA.O3.2018$Date)
+EPA.O3.2018$Date <- mdy(EPA.O3.2018$Date)
+class(EPA.O3.2018$Date)
+
+class(EPA.O3.2019$Date)
+EPA.O3.2019$Date <- mdy(EPA.O3.2019$Date)
+class(EPA.O3.2019$Date)
+
+class(EPA.PM.2018$Date)
+EPA.PM.2018$Date <- mdy(EPA.PM.2018$Date)
+class(EPA.PM.2018$Date)
+
+class(EPA.PM.2019$Date)
+EPA.PM.2019$Date <- mdy(EPA.PM.2019$Date)
+class(EPA.PM.2019$Date)
 
 #4
 
+EPA.O3.2018.select <- select(EPA.O3.2018, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+
+EPA.O3.2019.select <- select(EPA.O3.2019, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+
+EPA.PM.2018.select <- select(EPA.PM.2018, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+
+EPA.PM.2019.select <- select(EPA.PM.2019, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+
 #5
 
+EPA.PM.2018.select <- mutate(EPA.PM.2018.select, AQS_PARAMETER_DESC = ("PM2.5"))
+
+
+EPA.PM.2019.select <- mutate(EPA.PM.2019.select, AQS_PARAMETER_DESC = ("PM2.5"))
+
 #6
+
+write.csv(EPA.O3.2018.select, row.names = FALSE, 
+          file = "/Users/jessicacitrola/Documents/ENV872/Environmental_Data_Analytics_2022/Data/Processed/EPAair_O3_NC2018_processed.csv")
+
+write.csv(EPA.O3.2019.select, row.names = FALSE, 
+          file = "/Users/jessicacitrola/Documents/ENV872/Environmental_Data_Analytics_2022/Data/Processed/EPAair_O3_NC2019_processed.csv")
+
+write.csv(EPA.PM.2018.select, row.names = FALSE, 
+          file = "/Users/jessicacitrola/Documents/ENV872/Environmental_Data_Analytics_2022/Data/Processed/EPAair_PM25_NC2018_processed.csv")
+
+write.csv(EPA.PM.2019.select, row.names = FALSE, 
+          file = "/Users/jessicacitrola/Documents/ENV872/Environmental_Data_Analytics_2022/Data/Processed/EPAair_PM25_NC2019_processed.csv")
+
 
 ```
 
@@ -63,13 +135,43 @@ The completed exercise is due on Monday, Feb 7 @ 7:00pm.
 ```{r}
 #7
 
+#O3.2018 <- read.csv("/Users/jessicacitrola/Documents/ENV872/Environmental_Data_Analytics_2022/Data/Processed/EPAair_O3_NC2018_processed.csv",stringsAsFactors = TRUE)
+
+#O3.2019 <- read.csv("/Users/jessicacitrola/Documents/ENV872/Environmental_Data_Analytics_2022/Data/Processed/EPAair_O3_NC2019_processed.csv",stringsAsFactors = TRUE)
+
+#PM.2018 <- read.csv("/Users/jessicacitrola/Documents/ENV872/Environmental_Data_Analytics_2022/Data/Processed/EPAair_PM25_NC2018_processed.csv", stringsAsFactors = TRUE)
+
+#PM.2019 <- read.csv("/Users/jessicacitrola/Documents/ENV872/Environmental_Data_Analytics_2022/Data/Processed/EPAair_PM25_NC2019_processed.csv", stringsAsFactors = TRUE)
+
+O3.PM.Combined <- rbind(EPA.O3.2018.select , EPA.O3.2019.select, EPA.PM.2018.select, EPA.PM.2019.select)
+
 #8
 
+is.POSIXlt(O3.PM.Combined$Date)
+
+O3.PM.Updated <- 
+  O3.PM.Combined %>%
+  filter(Site.Name == "Linville Falls" | Site.Name == "Durham Armory" | Site.Name == "Leggett" | Site.Name == "Hattie Avenue" | Site.Name == "Clemmons Middle" | Site.Name == "Mendenhall School" | Site.Name == "Frying Pan Mountain" | Site.Name == "West Johnston Co." | Site.Name == "Garinger High School" | Site.Name == "Castle Hayne" | Site.Name == "Pitt Agri. Center" | Site.Name == "Bryson City" | Site.Name == "Millbrook School") %>%
+  group_by(Date, Site.Name, AQS_PARAMETER_DESC, COUNTY) %>%
+  summarise(meanAQI = mean(DAILY_AQI_VALUE),
+                      mean(SITE_LATITUDE),
+                      mean(SITE_LONGITUDE)) %>%
+  mutate(Month = month(Date)) %>%
+  mutate(Year = year(Date))
+            
 #9
+
+O3.PM.Updated.Spread <- pivot_wider(O3.PM.Updated, names_from = AQS_PARAMETER_DESC, values_from = meanAQI) 
+
 
 #10
 
+dim(O3.PM.Updated.Spread)
+
 #11
+
+write.csv(O3.PM.Updated.Spread, row.names = FALSE, 
+          file = "/Users/jessicacitrola/Documents/ENV872/Environmental_Data_Analytics_2022/Data/Processed/EPAair_O3_PM25_NC2122_Processed.csv")
 
 ```
 
@@ -85,11 +187,22 @@ The completed exercise is due on Monday, Feb 7 @ 7:00pm.
 ```{r}
 #12(a,b)
 
+O3.PM.summary <- 
+  O3.PM.Updated.Spread %>%
+  group_by(Site.Name, Month, Year) %>%
+  filter(!is.na(PM2.5) & !is.na(Ozone)) %>%
+  summarise(meanAQI.PM = mean(PM2.5), 
+            meanAQI.Ozone = mean(Ozone)) 
+
 
 #13
+
+dim(O3.PM.summary)
 
 ```
 
 14. Why did we use the function `drop_na` rather than `na.omit`?
 
 > Answer: 
+
+#Not being graded, used is.na.
