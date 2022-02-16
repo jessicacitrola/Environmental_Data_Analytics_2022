@@ -21,7 +21,7 @@ Effective data visualization depends on purposeful choices about graph types. Th
 ```{r, message = FALSE, warning = FALSE}
 getwd()
 library(tidyverse)
-#install.packages("ggridges")
+install.packages("ggridges")
 library(ggridges)
 
 PeterPaul.chem.nutrients <- 
@@ -156,6 +156,8 @@ NvsP <-
   geom_smooth(method = lm) +
   geom_abline(aes(slope = 16, intercept = 0))
 print(NvsP)
+
+#geom smooth is trend line, geom abline is you know the slope and intercept. 
 
 ```
 
